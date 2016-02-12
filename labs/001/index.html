@@ -1,0 +1,186 @@
+<html>
+	<head>
+		<title>Lab 001 (First JS Page)</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<base target="_blank">
+		<style type="text/css">
+			#answer, input, .plus {
+				width:100%;
+				text-align:center;
+			}
+			.plus, #answer {
+				margin-top:20px;
+				margin-bottom:20px;
+			}
+			#state {
+				transition:background-color 200ms;
+			}
+			.head {
+				height:45px;
+				font-size:36px;
+				margin:0;
+			}
+			span.pp {
+				position:absolute;
+				left:0;
+				font-size:25px;
+				margin-top:10px;
+				width:20%;
+			}
+			p.ppt {
+				padding:0;
+				margin:0;
+				width:80%;
+				position:absolute;
+				left:50px;
+			}
+			#map {
+				width:100%;
+				min-height:300px;
+				height:100%;
+			}
+			rect {
+				display:none;
+			}
+		</style>
+		<script src="js/raphael.js"></script>
+		<script src="js/jquery.usmap.js"></script>
+		<script type="text/javascript">
+			var playing = true;
+			$(document).ready(function() {
+				var states = {
+					"Alabama":"AL",
+					"Alaska":"AK",
+					"Arizona":"AZ",
+					"Arkansas":"AR",
+					"California":"CA",
+					"Colorado":"CO",
+					"Connecticut":"CT",
+					"Delaware":"DE",
+					"Florida":"FL",
+					"Georgia":"GA",
+					"Hawaii":"HI",
+					"Idaho":"ID",
+					"Illinois":"IL",
+					"Indiana":"IN",
+					"Iowa":"IA",
+					"Kansas":"KS",
+					"Kentucky":"KY",
+					"Louisiana":"LA",
+					"Maine":"ME",
+					"Maryland":"MD",
+					"Massachusetts":"MA",
+					"Michigan":"MI",
+					"Minnesota":"MN",
+					"Mississippi":"MS",
+					"Missouri":"MO",
+					"Montana":"MT",
+					"Nebraska":"NE",
+					"Nevada":"NV",
+					"New Hampshire":"NH",
+					"New Jersey":"NJ",
+					"New Mexico":"NM",
+					"New York":"NY",
+					"North Carolina":"NC",
+					"North Dakota":"ND",
+					"Ohio":"OH",
+					"Oklahoma":"OK",
+					"Oregon":"OR",
+					"Pennsylvania":"PA",
+					"Rhode Island":"RI",
+					"South Carolina":"SC",
+					"South Dakota":"SD",
+					"Tennessee":"TN",
+					"Texas":"TX",
+					"Utah":"UT",
+					"Vermont":"VT",
+					"Virginia":"VA",
+					"Washington":"WA",
+					"West Virginia":"WV",
+					"Wisconsin":"WI",
+					"Wyoming":"WY"
+
+				};
+				var lower = {};
+				$.each(states, function(k,v){
+					lower[k.toLowerCase()] = v;
+				});
+				var reset = false;
+				function timeup() {
+					$("#play").click();
+				}
+				function creTime(str) {
+					var wasd = str.split(":");
+					var time = parseInt(wasd[0]) * 60 + parseInt(wasd[1]) - 1;
+					if(time == 0) timeup();
+					return ("0" + Math.floor(time/60)).slice(-2) + ":" + ("0" + (time%60)).slice(-2);
+				}
+				function dec() {
+					$("#timer").html(
+						creTime($("p#timer").html())
+					);
+				}
+				var interval = null;
+				$("#timer")
+				$("#play").click(function() {
+					if(playing) {
+						$("#play").removeClass("glyphicon-pause").addClass("glyphicon-play");
+						clearInterval(interval);
+						playing = false;
+					} else {
+						$("#play").addClass("glyphicon-pause").removeClass("glyphicon-play");
+						if(reset) { $("p#timer").html("10:00"); reset = false; }
+						interval = setInterval(dec,1000);
+						playing = true;
+					}
+				});
+				$("#map").usmap({stateHoverStyles:{}, showLabels:true}); // Initialize map
+				$("tspan").html("") // Clear extra state abbreviations
+				$("#state").keydown(function(event) {
+					if(event.keyCode == 13) {
+						if(lower[$("#state").val().toLowerCase()] != undefined) {
+							$("#"+lower[$("#state").val().toLowerCase()]).attr(
+								{"fill":"#22BBFF","opacity":1}
+							);
+							$("#state").val("");
+						} else {
+							$("#state").css('background-color','#FF7777');
+							setTimeout(function() {
+								$("#state").css('background-color','white');
+							},200);
+							// console.log($("#state").val() + " not found");
+						}
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			<div class="row" style="margin:0;">
+				<div class="col-xs-8"></div>
+				<div class="col-xs-4 head">
+					<span class="glyphicon glyphicon-play pp" id="play"></span>
+					<p class="ppt" id="timer">10:00</p>
+				</div>
+			</div>
+		</div>
+		<div class="container" style="margin-top:50px;">
+			<div class="row">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-4"><input id="state" placeholder="State"></div>
+				<div class="col-sm-4"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-8 map" id="map">
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+		</div>
+	</body>
+</html>
