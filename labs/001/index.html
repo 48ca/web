@@ -16,6 +16,9 @@
 				margin-top:20px;
 				margin-bottom:20px;
 			}
+			#score {
+				text-align:right;
+			}
 			path {
 				transition:fill 200ms;
 				opacity:1; !important
@@ -30,6 +33,9 @@
 				height:45px;
 				font-size:36px;
 				margin:0;
+			}
+			path.found {
+				fill:#22BBFF;
 			}
 			span.pp {
 				position:absolute;
@@ -74,6 +80,8 @@
 				var reset = false;
 				function timeup() {
 					$("#play").click();
+					$("p#timer").css('color','red');
+					reset = true;
 				}
 				function creTime(str) {
 					var wasd = str.split(":");
@@ -86,6 +94,18 @@
 						creTime($("p#timer").html())
 					);
 				}
+				function updateScore(sup) {
+					var score = $(".found").size() + sup;
+					$("#score").html("Score: " + score);
+					if(score > 49) {
+						$("#play").click();
+						$("p#timer").css('color','green');
+						reset = true;
+					}
+				}
+				function resetScore() {
+					$("#score").html("Score: 0");
+				}
 				var interval = null;
 				$("#timer")
 				$("#play").click(function() {
@@ -96,7 +116,13 @@
 						playing = false;
 					} else {
 						$("#play").addClass("glyphicon-pause").removeClass("glyphicon-play");
-						if(reset) { $("p#timer").html("10:00"); reset = false; }
+						if(reset) {
+							$("p#timer").html("5:00").css('color','inherit');
+							$("path").css('fill','inherit');
+							$(".found").removeClass('found');
+							resetScore();
+							reset = false;
+						}
 						$("#state").prop('disabled',false);
 						interval = setInterval(dec,1000);
 						playing = true;
@@ -108,14 +134,15 @@
 					if(event.keyCode == 13) {
 						if(lower[$("#state").val().toLowerCase()] != undefined) {
 							var str = $("#state").val().toLowerCase();
+							$("#state").val("");
+							if($("#"+lower[str]).hasClass('found')) { return; }
 							$("#"+lower[str]).attr(
 								{"fill":"yellow","opacity":1}
 							);
 							setTimeout(function() {
-								$("#"+lower[str]).attr(
-									{"fill":"#22BBFF","opacity":1});
+								$("#"+lower[str]).addClass('found');
 							}, 150);
-							$("#state").val("");
+							updateScore(1);
 						} else {
 							$("#state").css('background-color','#FF7777');
 							setTimeout(function() {
@@ -131,10 +158,13 @@
 	<body>
 		<div id="header">
 			<div class="row" style="margin:0;">
-				<div class="col-xs-8"></div>
+				<div class="col-xs-4 head">
+					<p id="score">Score: 0</p>
+				</div>
+				<div class="col-xs-4"></div>
 				<div class="col-xs-4 head">
 					<span class="glyphicon glyphicon-play pp" id="play"></span>
-					<p class="ppt" id="timer">10:00</p>
+					<p class="ppt" id="timer">5:00</p>
 				</div>
 			</div>
 		</div>
