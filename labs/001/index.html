@@ -18,6 +18,7 @@
 			}
 			path {
 				transition:fill 200ms;
+				opacity:1; !important
 			}
 			#state {
 				transition: background-color 500ms;
@@ -91,10 +92,12 @@
 					if(playing) {
 						$("#play").removeClass("glyphicon-pause").addClass("glyphicon-play");
 						clearInterval(interval);
+						$("#state").prop('disabled',true);
 						playing = false;
 					} else {
 						$("#play").addClass("glyphicon-pause").removeClass("glyphicon-play");
 						if(reset) { $("p#timer").html("10:00"); reset = false; }
+						$("#state").prop('disabled',false);
 						interval = setInterval(dec,1000);
 						playing = true;
 					}
@@ -138,7 +141,7 @@
 		<div class="container" style="margin-top:50px;">
 			<div class="row">
 				<div class="col-sm-4"></div>
-				<div class="col-sm-4"><input id="state" placeholder="State"></div>
+				<div class="col-sm-4"><input id="state" placeholder="State" disabled=true></div>
 				<div class="col-sm-4"></div>
 			</div>
 			<div class="row">
