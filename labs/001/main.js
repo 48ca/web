@@ -14,10 +14,13 @@ $(document).ready(function() {
 		lower[k.toLowerCase()] = v;
 	});
 	var reset = false;
+	function al() {
+		alert("Score: " + gscore);
+	}
 	function timeup() {
 		$("#play").click();
 		$("p#timer").css('color','red');
-		alert("Score: " + gscore);
+		setTimeout(al,200);
 		reset = true;
 	}
 	function creTime(str) {
@@ -37,7 +40,7 @@ $(document).ready(function() {
 		gscore = score;
 		if(score > 49) {
 			// timeup();
-			alert("Score: " + gscore);
+			setTimeout(al,500);
 			$("#play").click();
 			$("p#timer").css('color','green');
 			reset = true;
