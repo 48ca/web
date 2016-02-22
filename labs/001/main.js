@@ -71,8 +71,8 @@ $(document).ready(function() {
 	});
 	$("#map").usmap({stateHoverStyles:{}, showLabels:true, stateSpecficStyles:{'DC':{fill:'yellow'}}}); // Initialize map
 	$("tspan").html("") // Clear extra state abbreviations
-	$("#state").keydown(function(event) {
-		if(event.keyCode == 13) {
+	$("#state").keyup(function(event) {
+		// if(event.keyCode == 13) {
 			if(lower[$("#state").val().toLowerCase()] != undefined) {
 				var str = $("#state").val().toLowerCase();
 				$("#state").val("");
@@ -84,6 +84,7 @@ $(document).ready(function() {
 					$("#"+lower[str]).addClass('found');
 				}, 150);
 				updateScore(1);
+			/*
 			} else {
 				$("#state").css('background-color','#FF7777');
 				setTimeout(function() {
@@ -91,6 +92,7 @@ $(document).ready(function() {
 				},200);
 				// console.log($("#state").val() + " not found");
 			}
+			*/
 		}
 	});
 });
