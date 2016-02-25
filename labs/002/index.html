@@ -13,19 +13,23 @@
 			var r = 255;
 			var g = 125;
 			var b = 0;
+			var al = true;
 			function genColor(r,g,b,d) {
 				return "rgb(" + r*(d+1)  + "," + g + "," + b + ")";
 			}
 			function setBack(t,color) {
 				t.style.backgroundColor = color;
+				al = true;
 			}
 			function traverse(t,depth,color) {
+				if(!al) return;
 				console.log(t);
 				if(t.style != undefined) {
 					// t.style.marginLeft = (50 * depth) + 'px';
 					if(color) {
 						var ocol = t.style.backgroundColor;
-						t.style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")"
+						t.style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+						al = false;
 						window.setTimeout(setBack,500,t,ocol);
 						return;
 					}
