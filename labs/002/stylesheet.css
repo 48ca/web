@@ -1,0 +1,58 @@
+html, body {
+	background-color:#FAFAFA;
+	margin:0;
+	font-family:'Open Sans',serif;
+}
+h1 {
+	text-align:center;
+}
+.writing {
+}
+.margins {
+	margin-left:10%;
+	width:80%;
+	margin-right:10%;
+}
+.caption {
+	background-color:#EEE;
+	padding:5px;
+	right:20%;
+	width:200px;
+	margin:0 auto;
+}
+img#hacktjthumb {
+	width:190px;
+}
+a:active, a:link, a:visited {
+	text-decoration:none;
+	color:#5555BB;
+}
+a:hover {
+	text-decoration:underline;
+	color:#5555BB;
+}
+p.sub {
+	background-color:white;
+	text-align:center;
+	margin:0;
+	padding-top:15px;
+	padding-bottom:15px;
+	color:grey;
+}
+#closing {
+	margin-top:20px;
+	text-align:center;
+	margin-bottom:20px;
+}
+table {
+	width:100%;
+}
+td.left {
+	padding:0;
+}
+td.right {
+	margin:0 auto;
+}
+* {
+	transition:background-color 500ms;
+}
