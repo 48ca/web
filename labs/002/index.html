@@ -46,6 +46,8 @@
 				var n = t.nextSibling;
 				if(n != undefined)
 					traverse(n,depth,true);
+				else
+					traverse(t.parentNode,depth-1,true);
 			}
 		</script>
 	</head>
