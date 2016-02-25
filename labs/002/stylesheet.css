@@ -21,7 +21,7 @@ h1 {
 	margin:0 auto;
 }
 img#hacktjthumb {
-	width:190px;
+	width:210px;
 }
 a:active, a:link, a:visited {
 	text-decoration:none;
@@ -55,4 +55,7 @@ td.right {
 }
 * {
 	transition:background-color 500ms;
+}
+span {
+	font-size:20px;
 }

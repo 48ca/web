@@ -31,11 +31,13 @@
 					}
 					// t.style.color = 'white';
 					// t.style.backgroundColor = genColor(40,0,0,depth);
-					// var ch = t.children[0];
 					var ch = t.children[0];
+					// var ch = t.nextChild;
 					console.log(ch);
-					if(ch != undefined)
+					if(ch != undefined) {
 						traverse(ch,depth+1,true);
+						return;
+					}
 					/* for(var i=0; i<len; i++) {
 						var child = ch[i];
 					} */
@@ -56,7 +58,12 @@
 						So I went to HackTJ a few days ago, and it was fun, but I think HackTJ last year was better for a few reasons.
 					</p>
 					<ol class="margins">
-						<li>Despite having a two-person team this time around, we still got about the same amount of work done :(</li>
+						<li>Despite having a two-person team this time around, we still got about the same amount of work done :(
+							<ul>
+								<span>The people who came:</span><li>2018wzhang</li><li>2017jhoughto</li>
+								<span>The people who ditched:</span><li>2017nchoe</li><li>2017cnui</li>
+							</ul>
+						</li>
 						<li>We were <i>all</i> limited to Gym 1, so it was cramped and felt way less chill</li>
 						<li>It was free, so a lot more people came, and everyone knows I don't like people :^)</li>
 					</ol>
@@ -67,7 +74,7 @@
 			<div class="row">
 				<div class="col-sm-2"></div>
 				<div class="col-sm-6" style="margin-bottom:20px;margin-top:20px;">
-					Even Nathan, one of my best friends (who unfortunately left TJ at the beginning of Sophomore year), came to HackTJ. Nathan's been asking me for help on getting started with CS after his bad experience with it freshman year, and one of the first steps was to come and see what he could learn at HackTJ.
+					<p>Even Nathan, one of my best friends (who unfortunately left TJ at the beginning of Sophomore year), came to HackTJ. Nathan's been asking me for help on getting started with <span>CS</span> after his bad experience with it freshman year, and one of the first steps was to come and see what he could learn at HackTJ.</p>
 				</div>
 				<div class="col-sm-4">
 					<div class="thumbnail">
