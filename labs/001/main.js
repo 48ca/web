@@ -75,27 +75,23 @@ $(document).ready(function() {
 	$("#map").usmap({stateHoverStyles:{}, showLabels:true, stateSpecficStyles:{'DC':{fill:'yellow'}}}); // Initialize map
 	$("tspan").html("") // Clear extra state abbreviations
 	$("#state").keyup(function(event) {
-		// if(event.keyCode == 13) {
-			if(lower[$("#state").val().toLowerCase()] != undefined) {
-				var str = $("#state").val().toLowerCase();
-				$("#state").val("");
-				if($("#"+lower[str]).hasClass('found')) { return; }
-				$("#"+lower[str]).attr(
-					{"fill":"yellow","opacity":1}
-				);
-				setTimeout(function() {
-					$("#"+lower[str]).addClass('found');
-				}, 150);
-				updateScore(1);
-			/*
-			} else {
-				$("#state").css('background-color','#FF7777');
-				setTimeout(function() {
-					$("#state").css('background-color','white');
-				},200);
-				// console.log($("#state").val() + " not found");
-			}
-			*/
+		if(lower[$("#state").val().toLowerCase()] != undefined) {
+			var str = $("#state").val().toLowerCase();
+			$("#state").val("");
+			if($("#"+lower[str]).hasClass('found')) { return; }
+			$("#"+lower[str]).attr(
+				{"fill":"yellow","opacity":1}
+			);
+			setTimeout(function() {
+				$("#"+lower[str]).addClass('found');
+			}, 150);
+			updateScore(1);
+		} else if(event.keyCode == 13) {
+			$("#state").css('background-color','#FF7777');
+			setTimeout(function() {
+				$("#state").css('background-color','white');
+			},200);
+			// console.log($("#state").val() + " not found");
 		}
 	});
 });

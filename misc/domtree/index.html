@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<title>DOM Tree Practice</title>
+		<link rel="stylesheet" href="stylesheet.css">
+		<script type="text/javascript">
+			function genColor(r,g,b,d) {
+				return "rgb(" + r*(d+1)  + "," + g + "," + b + ")";
+			}
+			function traverse(t,depth) {
+				console.log(t);
+				if(t.style != undefined) {
+					// t.style.marginLeft = (50 * depth) + 'px';
+					t.style.color = 'white';
+					t.style.backgroundColor = genColor(40,0,0,depth);
+					// var ch = t.children[0];
+					var ch = t.children[0];
+					console.log(ch);
+					if(ch != undefined)
+						traverse(ch,depth+1);
+					/* for(var i=0; i<len; i++) {
+						var child = ch[i];
+					} */
+				}
+				if ( t != undefined ) t.innerHTML += "<br>| Depth: " + depth + " | Class: " + t.classList + " | ID: " + t.id + " | Tag: " + t.tagName;
+				var n = t.nextSibling;
+				if(n != undefined)
+					traverse(n,depth);
+			}
+		</script>
+	</head>
+	<body onclick="traverse(event.target,0)">
+		<h1>HackTJ 2016</h1>
+		<div class="container writing">
+			<div class="row">
+				<div class="col-xs-12">
+					<p style="text-align:center;">
+						Herroooo.
+						So I went to HackTJ a few days ago, and it was fun, but I think HackTJ last year was better for a few reasons.
+					</p>
+					<ol class="margins">
+						<li>Despite having a two-person team this time around, we still got about the same amount of work done :(</li>
+						<li>We were <i>all</i> limited to Gym 1, so it was cramped and felt way less chill</li>
+						<li>It was free, so a lot more people came, and everyone knows I don't like people :^)</li>
+					</ol>
+					<br>
+					<p style="text-align:center;"> But it was still fun.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-6" style="margin-bottom:20px;margin-top:20px;">
+					Even Nathan, one of my best friends (who unfortunately left TJ at the beginning of Sophomore year), came to HackTJ. Nathan's been asking me for help on getting started with CS after his bad experience with it freshman year, and one of the first steps was to come and see what he could learn at HackTJ.
+				</div>
+				<div class="col-sm-4">
+					<div class="thumbnail">
+						<img id="hacktjthumb" src="hacktjsn.jpg"/>
+						<p class="sub">
+							"Reunion" -- Susanna and Nathan at <a href="//hacktj.org">HackTJ</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="closing">
+			<!-- I actually slept this time, too.<br-->
+			&#8212; James
+			<div class="deep" id="0">
+				<div class="deep" id="1">
+					<div class="deep" id="2">
+						<div class="deep" id="3">
+							<div class="deep" id="4">
+								<div class="deep" id="5">
+									<div class="deep" id="6">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
