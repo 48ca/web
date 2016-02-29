@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<title>DOM Tree Practice</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<link href="stylesheet.css" rel="stylesheet">
+		<base target="_blank">
+		<link rel="stylesheet" href="stylesheet.css">
+		<script type="text/javascript">
+			var r = 255;
+			var g = 125;
+			var b = 0;
+			var al = true;
+			function genColor(r,g,b,d) {
+				return "rgb(" + r*(d+1)  + "," + g + "," + b + ")";
+			}
+			function setBack(t,color) {
+				t.style.backgroundColor = color;
+				al = true;
+			}
+			function traverse(t,depth,color) {
+				if(!al) return;
+				console.log(t);
+				if(t.style != undefined) {
+					// t.style.marginLeft = (50 * depth) + 'px';
+					if(color) {
+						var ocol = t.style.backgroundColor;
+						t.style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+						al = false;
+						window.setTimeout(setBack,500,t,ocol);
+						return;
+					}
+					// t.style.color = 'white';
+					// t.style.backgroundColor = genColor(40,0,0,depth);
+					var ch = t.children[0];
+					// var ch = t.nextChild;
+					console.log(ch);
+					if(ch != undefined) {
+						traverse(ch,depth+1,true);
+						return;
+					}
+					/* for(var i=0; i<len; i++) {
+						var child = ch[i];
+					} */
+				}
+				// if ( t != undefined ) t.innerHTML += "<br>| Depth: " + depth + " | Class: " + t.classList + " | ID: " + t.id + " | Tag: " + t.tagName;
+				var n = t.nextSibling;
+				if(n != undefined)
+					traverse(n,depth,true);
+				else
+					traverse(t.parentNode,depth-1,true);
+			}
+		</script>
+	</head>
+	<body onclick="traverse(event.target,0,false)">
+		<h1>HackTJ 2016</h1>
+		<div class="container writing">
+			<div class="row">
+				<div class="col-xs-12">
+					<p style="text-align:center;">
+						So I went to HackTJ a few days ago, and it was fun, but I think HackTJ last year was better for a few reasons.
+					</p>
+					<ol class="margins">
+						<li>Despite having a two-person team this time around, we still got about the same amount of work done :(
+							<ul>
+								<span>The people who came:</span><li>2018wzhang</li><li>2017jhoughto</li>
+								<span>The people who ditched:</span><li>2017nchoe</li><li>2017cnui</li>
+							</ul>
+						</li>
+						<li>We were <i>all</i> limited to Gym 1, so it was cramped and felt way less chill</li>
+						<li>It was free, so a lot more people came, and everyone knows I don't like people :^)</li>
+					</ol>
+					<br>
+					<p style="text-align:center;"> But it was still fun.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-6" style="margin-bottom:20px;margin-top:20px;">
+					<p>Even Nathan, one of my best friends (who unfortunately left TJ at the beginning of Sophomore year), came to HackTJ. Nathan's been asking me for help on getting started with <span>CS</span> after his bad experience with it freshman year, and one of the first steps was to come and see what he could learn at HackTJ.</p>
+				</div>
+				<div class="col-sm-4">
+					<div class="thumbnail">
+						<img id="hacktjthumb" src="hacktjsn.jpg"/>
+						<p class="sub">
+							<span class="sp">"Reunion"</span> -- Susanna and Nathan at <a href="//hacktj.org">HackTJ</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="closing">
+			<!-- I actually slept this time, too.<br-->
+			&#8212; James
+		</div>
+	</body>
+</html>
