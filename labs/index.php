@@ -3,7 +3,7 @@
 		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 		<style>
-		.wrap { width: 600px; height: 480px; padding: 0; overflow: hidden; display:inline-block; text-align:left; margin-left:10px; margin-right:10px; }
+		.wrap { width: 600px; height: 480px; padding: 0; overflow: hidden; display:inline-block; text-align:left; margin-left:10px; margin-right:10px; margin-top:20px; }
 		iframe { width: 921px; height: 640px; border: 1px solid black; background-color:white; border-radius: 20px; margin:0; padding:0; }
 		iframe {
 			-ms-zoom: 0.75;
@@ -29,10 +29,14 @@
 		a {
 			font-size:45px;
 			color:#BBB;
+			width:100%;
+			padding-left:10px;
 			transition:color 200ms;
+			transition:padding-left 200ms;
 			text-decoration:none;
 		}
 		a:hover {
+			padding-left:40px;
 			color:white;
 		}
 		</style>
