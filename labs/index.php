@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<meta content="width=device-width, initial-scale=.5" name="viewport" />
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 		<style>
 		.wrap { width: 600px; height: 480px; padding: 0; overflow: hidden; display:inline-block; text-align:left; margin-left:10px; margin-right:10px; margin-top:20px; }
@@ -22,6 +22,7 @@
 		}
 		html, body {
 			background-color:#212121;
+			min-width:620px;
 		}
 		* {
 			font-family:'Open Sans',sans-serif,Helvetica;
@@ -39,9 +40,19 @@
 			padding-left:40px;
 			color:white;
 		}
+		p {
+			color:white;
+			width:100%;
+			text-align:center;
+			font-size:60px;
+			margin-bottom:0px;
+		}
 		</style>
 	</head>
 	<body>
+		<p>
+			The Lab Index
+		</p>
 		<div class="list">
 		<?php
 			$dir = scandir('.');
