@@ -26,9 +26,9 @@
 		}
 	</style>
 	<script type="text/javascript">
-		var r = 255;
+		var r = 0;
 		var g = 125;
-		var b = 0;
+		var b = 255;
 		var al = true;
 		function genColor(r,g,b,d) {
 			return "rgb(" + r*(d+1)  + "," + g + "," + b + ")";
@@ -37,9 +37,18 @@
 			t.style.backgroundColor = color;
 			al = true;
 		}
-		function traverse(t,depth,color) {
-			if(!al) return;
+		function traverse(t,depth,color,ns) {
+			if(t == undefined) traverse(document.getElementsByTagName("body")[0],0,color,false);
 			console.log(t);
+			if(ns) {
+				if(t.nextSibling == null) {
+					traverse(t.parentNode,depth-1,true);
+				} else {
+					traverse(t.nextSibling,depth,true);
+				}
+			}
+			if(!al) return;
+			// console.log(t);
 			if(t.style != undefined) {
 				// t.style.marginLeft = (50 * depth) + 'px';
 				if(color) {
@@ -53,9 +62,9 @@
 				// t.style.backgroundColor = genColor(40,0,0,depth);
 				var ch = t.children[0];
 				// var ch = t.nextChild;
-				console.log(ch);
+				// console.log(ch);
 				if(ch != undefined) {
-					traverse(ch,depth+1,true);
+					traverse(ch,depth+1,true,false);
 					return;
 				}
 				/* for(var i=0; i<len; i++) {
@@ -65,9 +74,9 @@
 			// if ( t != undefined ) t.innerHTML += "<br>| Depth: " + depth + " | Class: " + t.classList + " | ID: " + t.id + " | Tag: " + t.tagName;
 			var n = t.nextSibling;
 			if(n != undefined)
-				traverse(n,depth,true);
+				traverse(n,depth,true,false);
 			else
-				traverse(t.parentNode,depth-1,true);
+				traverse(t.parentNode,depth-1,true,true);
 		}
 	</script>
 </head>
