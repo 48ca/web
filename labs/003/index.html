@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
+		<script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var options = {
+					"Cars":["Car1","Car2","Car3"],
+					"Shoe Brands":["Shoe1","Shoe2","Shoe3"],
+					"Computer Brands":["CBrand1", "CBrand2", "CBrand3"]
+				};
+				var keys = Object.keys(options);
+				var klen = keys.length;
+				var ids = [];
+				for(var i=0; i<klen; i++) {
+					ids[i] = keys[i].replace(" ","");
+				}
+				$("#cat").html((function(){
+					var str = "";
+					for(var i=0;i<klen;i++)
+						str += "<option id='" + ids[i] + "'>" + keys[i] + "</option>";
+					return str;
+				}())).change(function(){
+					var name = $("#cat :selected").text();
+					$("#sel").html((function() {
+						var opt = options[name];
+						var len = opt.length;
+						var tstr = "";
+						for(var i=0;i<len;i++) {
+							tstr += "<option>" + opt[i] + "</option>";
+						}
+						return tstr;
+					})());
+				}).change(); 
+				$("#drop").click(function() {
+					$("#sel").prop('multiple',false);
+					$("#cat").prop('multiple',false);
+				}).click();
+				$("#list").click(function() {
+					$("#sel").prop('multiple',true);
+					$("#cat").prop('multiple',true);
+				});
+			});
+		</script>
+		<style type="text/css">
+			p.title {
+				margin-top:20px;
+				margin-bottom:20px;
+				width:100%;
+				text-align:center;
+				font-size:50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mdl-grid">
+			<div class="mdl-cell mdl-cell--2-col"></div>
+			<div class="mdl-cell mdl-cell--8-col">
+				<p class="title">
+					Some survey!
+				</p>
+				<form>
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="text" pattern="\d{5}" id="zip">
+						<label class="mdl-textfield__label" for="zip">ZIP Code</label>
+						<span class="mdl-textfield__error">Invalid ZIP code!</span>
+					</div>
+					<br>
+					<div class="mdl-textfield mdl-js-textfield">
+						<input type="text" class="mdl-textfield__input" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" id="email"></input>
+						<label class="mdl-textfield__label" for="email">username@email.com</label>
+						<span class="mdl-textfield__error">Invalid email address!</span>
+					</div>
+					<br>
+					<div class="mdl-textfield mdl-js-textfield">
+						<textarea class="mdl-textfield__input" type="text" id="comments" ></textarea>
+						<label class="mdl-textfield__label" for="comments">Comments</label>
+					</div>
+					<br>
+					<div id="multi">
+						<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="drop">
+							<input type="radio" name="drop" class="mdl-radio__button" value="1" id="drop">
+							<span class="mdl-radio__label">Dropdown</span>
+						</label>
+						<br>
+						<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="list">
+							<input type="radio" name="drop" class="mdl-radio__button" value="2" id="list">
+							<span class="mdl-radio__label">Full list</span>
+						</label>
+						<br>
+						<select id="cat">
+							<!-- Populated by JS -->
+						</select>
+						<select id="sel">
+							<!-- Populated by JS -->
+						</select>
+					</div>
+					<br>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+						Submit
+					</button>
+				</form>
+			</div>
+			<div class="mdl-cell mdl-cell--2-col"></div>
+		</div>
+	</body>
+</html>
