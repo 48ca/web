@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<script src="jquery.cookie.js"></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
 		<script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
@@ -43,40 +44,135 @@
 					$("#sel").prop('multiple',true);
 					$("#cat").prop('multiple',true);
 				});
+				//
+				$("#zipfield").focusout(function() {
+					var zip = $("#zip").val();
+					if(zip.match(/[0-9]{5}/g)) {
+						var ajaxstring = "http://maps.googleapis.com/maps/api/geocode/json?address="+zip;
+						$.getJSON(ajaxstring,{},function(data) {
+							var res = data["results"][0]["address_components"];
+							var state = res[2]["short_name"];
+							if(state.match(/[A-Z]{2}/)) {
+								if($("#state").val() == "") {
+									$("#state").val(state);
+									$("#statefield").addClass("is-dirty");
+								}
+								if($("#city").val() == "") {
+									$("#city").val(res[1]["long_name"]);
+									$("#cityfield").addClass("is-dirty");
+								}
+							} 
+						});
+					}
+				});
+				if($.cookie('username')) {
+					$("welcome").html("Welcome back, " + $.cookie('username'));
+				}
+				$("form").submit(function(event){
+					$.cookie('username', $("input#username").val());
+				});
 			});
 		</script>
 		<style type="text/css">
 			p.title {
 				margin-top:20px;
-				margin-bottom:20px;
+				margin-bottom:50px;
 				width:100%;
 				text-align:center;
 				font-size:50px;
 			}
+			p.welcome {
+				font-size:25px;
+				text-align:center;
+				margin-bottom:30px;
+			}
+			form {
+				text-align:center;
+			}
+			.header {
+				width:100%;
+				height:20px;
+				background-color:black;
+				margin-bottom:20px;
+			}
+			.header > a {
+				margin-left:20px;
+				color:#AAAAAA;
+				transition: color 200ms;
+			}
+			a, a:hover, a:active, a:focus, a:visited {
+				text-decoration:none;
+			}
+			a:hover {
+				color:white;
+			}
+			#multi {
+				width:100px;
+				text-align:left;
+				margin:0 auto;
+			}
+			.hint {
+				text-align:right;
+				color:#AAAAAA;
+				font-size:10px;
+				margin-top:-20px;
+				height:20px;
+			}
+			.hint > .htext {
+				width:300px;
+				margin:0 auto;
+			}
+			body {
+				background-color: #F5F5F5;
+			}
 		</style>
 	</head>
 	<body>
+		<div class="header">
+			<a href="../">&larr; Back to labs</a>
+		</div>
 		<div class="mdl-grid">
 			<div class="mdl-cell mdl-cell--2-col"></div>
 			<div class="mdl-cell mdl-cell--8-col">
+				<p class="welcome">
+				</p>
 				<p class="title">
 					Some survey!
 				</p>
-				<form>
-					<div class="mdl-textfield mdl-js-textfield">
+				<form action="submit.php" autocomplete="on" method="post">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="userfield">
+						<input class="mdl-textfield__input" type="text" id="username" name="username">
+						<label class="mdl-textfield__label" for="username">Username</label>
+					</div>
+					<br>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="statefield">
+						<input class="mdl-textfield__input" type="text" pattern="[A-Z]{2}" id="state">
+						<label class="mdl-textfield__label" for="state" name="state">State</label>
+						<span class="mdl-textfield__error">Invalid state!</span>
+					</div>
+					<br>
+					<div class="hint"><div class="htext">e.g. VA</div></div>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="cityfield">
+						<input class="mdl-textfield__input" type="text" id="city" name="city">
+						<label class="mdl-textfield__label" for="city">City</label>
+					</div>
+					<br>
+					<div class="hint"><div class="htext">e.g. Arlington</div></div>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="zipfield">
 						<input class="mdl-textfield__input" type="text" pattern="\d{5}" id="zip">
-						<label class="mdl-textfield__label" for="zip">ZIP Code</label>
+						<label class="mdl-textfield__label" for="zip" name="zip">ZIP Code</label>
 						<span class="mdl-textfield__error">Invalid ZIP code!</span>
 					</div>
 					<br>
-					<div class="mdl-textfield mdl-js-textfield">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 						<input type="text" class="mdl-textfield__input" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" id="email"></input>
-						<label class="mdl-textfield__label" for="email">username@email.com</label>
+						<label class="mdl-textfield__label" for="email" name="email">Email</label>
 						<span class="mdl-textfield__error">Invalid email address!</span>
 					</div>
+					<div class="hint"><div class="htext">e.g. johndoe@email.com</div></div>
 					<br>
-					<div class="mdl-textfield mdl-js-textfield">
-						<textarea class="mdl-textfield__input" type="text" id="comments" ></textarea>
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<textarea class="mdl-textfield__input" type="text" id="comments" name="comments"></textarea>
 						<label class="mdl-textfield__label" for="comments">Comments</label>
 					</div>
 					<br>
@@ -90,14 +186,15 @@
 							<input type="radio" name="drop" class="mdl-radio__button" value="2" id="list">
 							<span class="mdl-radio__label">Full list</span>
 						</label>
-						<br>
-						<select id="cat">
-							<!-- Populated by JS -->
-						</select>
-						<select id="sel">
-							<!-- Populated by JS -->
-						</select>
 					</div>
+					<br>
+					<select id="cat">
+						<!-- Populated by JS -->
+					</select>
+					<select id="sel">
+						<!-- Populated by JS -->
+					</select>
+					<br>
 					<br>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
 						Submit
