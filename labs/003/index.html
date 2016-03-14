@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<title>Survey</title>
 		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 		<script src="jquery.cookie.js"></script>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -8,6 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script type="text/javascript">
 			$(document).ready(function() {
+				$('#date')[0].valueAsDate = new Date();
 				var options = {
 					"Cars":["Car1","Car2","Car3"],
 					"Shoe Brands":["Shoe1","Shoe2","Shoe3"],
@@ -48,7 +50,7 @@
 				$("#zipfield").focusout(function() {
 					var zip = $("#zip").val();
 					if(zip.match(/[0-9]{5}/g)) {
-						var ajaxstring = "http://maps.googleapis.com/maps/api/geocode/json?address="+zip;
+						var ajaxstring = "https://maps.googleapis.com/maps/api/geocode/json?address="+zip;
 						$.getJSON(ajaxstring,{},function(data) {
 							var res = data["results"][0]["address_components"];
 							var state = res[2]["short_name"];
@@ -65,20 +67,41 @@
 						});
 					}
 				});
-				if($.cookie('username')) {
-					$("welcome").html("Welcome back, " + $.cookie('username'));
+				if($.cookie('username') != "") {
+					$("p.welcome").html("Welcome back, " + $.cookie('username') + "!");
 				}
 				$("form").submit(function(event){
 					$.cookie('username', $("input#username").val());
 				});
+				$("input#username").focus();
 			});
 		</script>
 		<style type="text/css">
+			#date {
+				font-family: "Helvetica","Arial",sans-serif;
+				background-color:#F5F5F5;
+				border: none;
+				width:250px;
+			}
+			#datelabel {
+				display: inline;
+				margin-left:-12px;
+			}
+			#datewrapper {
+				margin:0 auto;
+				width:300px;
+				border-bottom: 1px solid rgba(0,0,0,.12);
+			}
+			#datewrapper > * {
+				color:rgba(0,0,0,.26);
+				font-size:16px;
+			}
 			p.title {
 				margin-top:20px;
 				margin-bottom:50px;
 				width:100%;
 				text-align:center;
+				line-height:50px;
 				font-size:50px;
 			}
 			p.welcome {
@@ -137,7 +160,7 @@
 				<p class="welcome">
 				</p>
 				<p class="title">
-					Some survey!
+					Mobile Application Development Survey
 				</p>
 				<form action="submit.php" autocomplete="on" method="post">
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="userfield">
@@ -171,6 +194,11 @@
 					</div>
 					<div class="hint"><div class="htext">e.g. johndoe@email.com</div></div>
 					<br>
+					<div id="datewrapper">
+						<p id="datelabel">Date</p>
+						<input type="date" name="date" id="date">
+					</div>
+					<br>
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 						<textarea class="mdl-textfield__input" type="text" id="comments" name="comments"></textarea>
 						<label class="mdl-textfield__label" for="comments">Comments</label>
@@ -181,7 +209,6 @@
 							<input type="radio" name="drop" class="mdl-radio__button" value="1" id="drop">
 							<span class="mdl-radio__label">Dropdown</span>
 						</label>
-						<br>
 						<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="list">
 							<input type="radio" name="drop" class="mdl-radio__button" value="2" id="list">
 							<span class="mdl-radio__label">Full list</span>
@@ -205,3 +232,4 @@
 		</div>
 	</body>
 </html>
+
