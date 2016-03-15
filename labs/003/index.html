@@ -11,9 +11,9 @@
 			$(document).ready(function() {
 				$('#date')[0].valueAsDate = new Date();
 				var options = {
-					"Cars":["Car1","Car2","Car3"],
-					"Shoe Brands":["Shoe1","Shoe2","Shoe3"],
-					"Computer Brands":["CBrand1", "CBrand2", "CBrand3"]
+					"I liked it":["Nice meme","Car2","Car3"],
+					"Indifferent":["Shoe1","Shoe2","Shoe3"],
+					"I disliked it":["CBrand1", "CBrand2", "CBrand3"]
 				};
 				var keys = Object.keys(options);
 				var klen = keys.length;
@@ -67,7 +67,7 @@
 						});
 					}
 				});
-				if($.cookie('username') != "") {
+				if($.cookie('username')) {
 					$("p.welcome").html("Welcome back, " + $.cookie('username') + "!");
 				}
 				$("form").submit(function(event){
@@ -77,6 +77,12 @@
 			});
 		</script>
 		<style type="text/css">
+			.bottomright {
+				opacity:.5;
+				position:fixed;
+				bottom: 20px;
+				right: 20px;
+			}
 			#date {
 				font-family: "Helvetica","Arial",sans-serif;
 				background-color:#F5F5F5;
@@ -164,8 +170,9 @@
 				</p>
 				<form action="submit.php" autocomplete="on" method="post">
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="userfield">
-						<input class="mdl-textfield__input" type="text" id="username" name="username">
+						<input class="mdl-textfield__input" type="text" id="username" name="username" pattern="\w+">
 						<label class="mdl-textfield__label" for="username">Username</label>
+						<span class="mdl-textfield__error">Username may only contain alphanumeric characters!</span>
 					</div>
 					<br>
 					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="statefield">
@@ -205,11 +212,11 @@
 					</div>
 					<br>
 					<div id="multi">
-						<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="drop">
+						<label class="mdl-radio mdl-js-radio" for="drop">
 							<input type="radio" name="drop" class="mdl-radio__button" value="1" id="drop">
 							<span class="mdl-radio__label">Dropdown</span>
 						</label>
-						<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="list">
+						<label class="mdl-radio mdl-js-radio" for="list">
 							<input type="radio" name="drop" class="mdl-radio__button" value="2" id="list">
 							<span class="mdl-radio__label">Full list</span>
 						</label>
@@ -229,6 +236,9 @@
 				</form>
 			</div>
 			<div class="mdl-cell mdl-cell--2-col"></div>
+			<div class="bottomright">
+				<img src="logo.svg"></img>
+			</div>
 		</div>
 	</body>
 </html>
