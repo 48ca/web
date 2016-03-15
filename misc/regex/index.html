@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title>Regex Practice</title>
+	<script type="text/javascript">
+		function validateEmail(event) {
+			var email = event.target.value;
+			var regex = /[\w]+@[\w]+\.[\w]+/i;
+			if(!regex.test(email)) {
+				alert("Bad email!");
+			}
+		}
+	</script>
+</head>
+<body>
+	<form>
+		<div>Name: <input type="text" name="name" pattern="/[A-Za-z]+/"></div>
+		<div>Email: <input id="email" type="text" name="email" onblur="validateEmail(event)"></div>
+		<input type="submit">
+	</form>
+</body>
+</html>
