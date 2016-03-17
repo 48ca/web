@@ -11,9 +11,9 @@
 			$(document).ready(function() {
 				$('#date')[0].valueAsDate = new Date();
 				var options = {
-					"I liked it":["Nice meme","Car2","Car3"],
-					"Indifferent":["Shoe1","Shoe2","Shoe3"],
-					"I disliked it":["CBrand1", "CBrand2", "CBrand3"]
+					"Helpful":["Helps students","Encourages world peace","Chuck E. Cheese locator"],
+					"Unhelpful":["Drains battery", "Makes the phone vibrate randomly", "Plays random sounds on the speaker"],
+					"Malicious":["Uses your phone to as a node crack passwords","Makes your phone a host for DDoS attacks","Installs a keylogger"]
 				};
 				var keys = Object.keys(options);
 				var klen = keys.length;
@@ -77,6 +77,15 @@
 			});
 		</script>
 		<style type="text/css">
+			#appd {
+				width:298px;
+				padding-bottom:5px;
+				border: 1px solid rgba(63,81,181,.3);
+				margin:0 auto;
+			}
+			#appd > * {
+				color:rgba(0,0,0,.70);
+			}
 			.bottomright {
 				opacity:.5;
 				position:fixed;
@@ -211,24 +220,28 @@
 						<label class="mdl-textfield__label" for="comments">Comments</label>
 					</div>
 					<br>
-					<div id="multi">
-						<label class="mdl-radio mdl-js-radio" for="drop">
-							<input type="radio" name="drop" class="mdl-radio__button" value="1" id="drop">
-							<span class="mdl-radio__label">Dropdown</span>
-						</label>
-						<label class="mdl-radio mdl-js-radio" for="list">
-							<input type="radio" name="drop" class="mdl-radio__button" value="2" id="list">
-							<span class="mdl-radio__label">Full list</span>
-						</label>
+					<div id="appd">
+						<p>What does your app do?</p>
+						<div id="multi">
+							<label class="mdl-radio mdl-js-radio" for="drop">
+								<input type="radio" name="drop" class="mdl-radio__button" value="1" id="drop">
+								<span class="mdl-radio__label">Dropdown</span>
+							</label>
+							<label class="mdl-radio mdl-js-radio" for="list">
+								<input type="radio" name="drop" class="mdl-radio__button" value="2" id="list">
+								<span class="mdl-radio__label">Full list</span>
+							</label>
+						</div>
+						<br>
+						<select id="cat">
+							<!-- Populated by JS -->
+						</select>
+						<br>
+						<select id="sel">
+							<!-- Populated by JS -->
+						</select>
+						<br>
 					</div>
-					<br>
-					<select id="cat">
-						<!-- Populated by JS -->
-					</select>
-					<select id="sel">
-						<!-- Populated by JS -->
-					</select>
-					<br>
 					<br>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
 						Submit
