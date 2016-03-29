@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>Scrabble Word Search</title>
+        <script type="text/javascript">
+            function start() {
+                var letters = document.getElementById("start").value;
+                var ajax = new XMLHttpRequest();
+                ajax.onreadystatechange = function() {
+                    if(ajax.readyState == 4 && ajax.status == 200) {
+                        document.getElementById("startres").innerHTML = ajax.responseText;
+                    }
+                }
+                ajax.open("GET","scrabble.php?f=start&l="+letters);
+                ajax.send();
+            }
+            function end() {
+                var letters = document.getElementById("end").value;
+                var ajax = new XMLHttpRequest();
+                ajax.onreadystatechange = function() {
+                    if(ajax.readyState == 4 && ajax.status == 200) {
+                        document.getElementById("endres").innerHTML = ajax.responseText;
+                    }
+                }
+                ajax.open("GET","scrabble.php?f=end&l="+letters);
+                ajax.send();
+            }
+            function contain() {
+                var letters = document.getElementById("contain").value;
+                var ajax = new XMLHttpRequest();
+                ajax.onreadystatechange = function() {
+                    if(ajax.readyState == 4 && ajax.status == 200) {
+                        document.getElementById("containres").innerHTML = ajax.responseText;
+                    }
+                }
+                ajax.open("GET","scrabble.php?f=contain&l="+letters);
+                ajax.send();
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Find words for scrabble</h1>
+        <hr>
+        Words that start with:
+        <input type="text" id="start">
+        <button id="startbutton" onclick="start()">Try</button>
+        <br>
+        <div id="startres">
+        </div>
+        <hr>
+        Words that end with:
+        <input type="text" id="end">
+        <button id="endbutton" onclick="end()">Try</button>
+        <br>
+        <div id="endres">
+        </div>
+        <hr>
+        Words that contain:
+        <input type="text" id="contain">
+        <button id="containbutton" onclick="contain()">Try</button>
+        <br>
+        <div id="containres">
+        </div>
+        <hr>
+    </body>
+</html>
