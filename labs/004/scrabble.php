@@ -3,20 +3,25 @@
         // $words = file_get_contents("/usr/share/dict/words");
         $words = file_get_contents("dict.txt");
         if(!$words) return "";
-        echo($r);
+        // echo($r);
         preg_match_all("/\b(".$r.")\b/", $words, $keys);
         $ret = "";
         $fwords = $keys[0];
         if($len > 0) {
             foreach($fwords as $w) {
                 if(strlen($w) == $len) {
-                    echo($w."<br>");
+                    $ret .= $w."<br>";
                 }
             }
         } else {
             foreach($fwords as $w) {
-                echo($w."<br>");
+                $ret .= $w."<br>";
             }
+        }
+        if(strlen($ret) > 0) {
+            echo($ret);
+        } else {
+            echo("No matches");
         }
     }
     foreach($argv as $arg) {
@@ -44,8 +49,7 @@
                 else $used[$let] = 1;
             }
             foreach($used as $let => $num) {
-                $app = ("\w*".$let)*2; // Double string // broken
-                $regex.="(?=".$app.")";
+                $regex.="(?=".str_repeat("\w*".$let,$num).")";
             }
             $regex.="\w{".strlen($l).",}";
             find($regex,$len);
