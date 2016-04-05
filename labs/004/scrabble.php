@@ -24,6 +24,7 @@
             echo("No matches");
         }
     }
+	/*
     foreach($argv as $arg) {
         $e=explode("=",$arg);
         if(count($e) == 2)
@@ -31,6 +32,7 @@
         else
             $_GET[$e[0]] = 0;
     }
+	*/
     if(!isset($_GET["f"]) || !isset($_GET["l"]) || !isset($_GET["len"])) return;
     $l = strtolower($_GET["l"]);
     $len = 0+$_GET["len"];
