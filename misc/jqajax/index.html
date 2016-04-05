@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#submit").click(function(){
+                    $.ajax({
+                        url:"../phpinput",
+                        data: {
+                            num1:$("#i1").val(),
+                            num2:$("#i2").val()
+                        },
+                        success: function(data, status, request) {
+                            $("#output").html(data);
+                        }
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <input id="i1" type="text">
+        <input id="i2" type="text">
+        <button id="submit">Submit</button>
+        <div id="output">
+        </div>
+    </body>
+</html>

@@ -2,61 +2,55 @@
     <head>
         <title>Scrabble Word Search</title>
         <script type="text/javascript">
-            function start() {
-                var letters = document.getElementById("start").value;
-                var ajax = new XMLHttpRequest();
-                ajax.onreadystatechange = function() {
-                    if(ajax.readyState == 4 && ajax.status == 200) {
-                        document.getElementById("startres").innerHTML = ajax.responseText;
-                    }
-                }
-                ajax.open("GET","scrabble.php?f=start&l="+letters);
-                ajax.send();
+            function isInteger(n) {
+                return !isNaN(parseInt(n)) && isFinite(n);
             }
-            function end() {
-                var letters = document.getElementById("end").value;
+            function calc(func) {
+                var letters = document.getElementById(func).value;
+                var len = document.getElementById(func+"len").value;
+                if(!isInteger(len)) len = -1;
                 var ajax = new XMLHttpRequest();
                 ajax.onreadystatechange = function() {
                     if(ajax.readyState == 4 && ajax.status == 200) {
-                        document.getElementById("endres").innerHTML = ajax.responseText;
+                        document.getElementById(func+"res").innerHTML = ajax.responseText;
                     }
                 }
-                ajax.open("GET","scrabble.php?f=end&l="+letters);
-                ajax.send();
-            }
-            function contain() {
-                var letters = document.getElementById("contain").value;
-                var ajax = new XMLHttpRequest();
-                ajax.onreadystatechange = function() {
-                    if(ajax.readyState == 4 && ajax.status == 200) {
-                        document.getElementById("containres").innerHTML = ajax.responseText;
-                    }
-                }
-                ajax.open("GET","scrabble.php?f=contain&l="+letters);
+                var url = "scrabble.php?f="+func+"&len="+len+"&l="+letters;
+                console.log(url);
+                ajax.open("GET",url);
                 ajax.send();
             }
         </script>
+        <style>
+            #startres, #containres, #endres {
+                max-height:300px;
+                overflow-y:scroll;
+            }
+        </style>
     </head>
     <body>
-        <h1>Find words for scrabble</h1>
+        <h1>Find words for Scrabble</h1>
         <hr>
         Words that start with:
         <input type="text" id="start">
-        <button id="startbutton" onclick="start()">Try</button>
+        of length <input type="text" id="startlen" placeholder="any">
+        <button id="startbutton" onclick="calc('start')">Try</button>
         <br>
         <div id="startres">
         </div>
         <hr>
         Words that end with:
         <input type="text" id="end">
-        <button id="endbutton" onclick="end()">Try</button>
+        of length <input type="text" id="endlen" placeholder="any">
+        <button id="endbutton" onclick="calc('end')">Try</button>
         <br>
         <div id="endres">
         </div>
         <hr>
         Words that contain:
         <input type="text" id="contain">
-        <button id="containbutton" onclick="contain()">Try</button>
+        of length <input type="text" id="containlen" placeholder="any">
+        <button id="containbutton" onclick="calc('contain')">Try</button>
         <br>
         <div id="containres">
         </div>
