@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript">
+            var gm = {
+                'A':4.0,'B':3.0,'C':2.0,'D':1.0,'F':0.0
+            };
+            function c(t) {
+                var e1 = document.getElementById("q1");
+                var e2 = document.getElementById("q2");
+                var sel1 = gm[e1.options[e1.selectedIndex].text];
+                var sel2 = gm[e2.options[e2.selectedIndex].text];
+                console.log(sel1);
+                console.log(sel2);
+                document.getElementById("gpa").innerHTML = (sel1+sel2)/2;
+            }
+        </script>
+        <style type="text/css">
+            html, body {
+                background-color:#a2e4fa;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Period 1</h1>
+        <h2>James Houghton</h2>
+        <table>
+            <tr>
+                <td>GPA</td>
+                <td id="gpa">4</td>
+            </tr>
+            <tr>
+                <td>Quarter 1:</td>
+                <td>
+                    <select onchange="c(this)" id="q1">
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                        <option>F</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Quarter 2:</td>
+                <td>
+                    <select onchange="c(this)" id="q2">
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                        <option>F</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
