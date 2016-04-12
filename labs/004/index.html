@@ -6,19 +6,27 @@
                 return !isNaN(parseInt(n)) && isFinite(n);
             }
             function calc(func) {
-                var letters = document.getElementById(func).value;
-                var len = document.getElementById(func+"len").value;
+                var letters = document.getElementById("tin").value;
+                var len = document.getElementById("len").value;
                 if(!isInteger(len)) len = -1;
                 var ajax = new XMLHttpRequest();
                 ajax.onreadystatechange = function() {
                     if(ajax.readyState == 4 && ajax.status == 200) {
-                        document.getElementById(func+"res").innerHTML = ajax.responseText;
+                        document.getElementById("res").innerHTML = ajax.responseText;
                     }
                 }
                 var url = "scrabble.php?f="+func+"&len="+len+"&l="+letters;
                 console.log(url);
                 ajax.open("GET",url);
                 ajax.send();
+            }
+            function tryl() {
+                var e = document.getElementById("func");
+                switch(e.options[e.selectedIndex].text) {
+                    case "start with": calc('start');break;
+                    case "end with": calc('end');break;
+                    case "contain": calc('contain');break;
+                }
             }
         </script>
         <style>
@@ -35,28 +43,14 @@
     <body>
         <h1>Find words for Scrabble</h1>
         <hr>
-        Words that start with:
-        <input type="text" id="start">
-        of length <input type="text" id="startlen" placeholder="any">
-        <button id="startbutton" onclick="calc('start')">Try</button>
+        Words that <select id="func">
+            <option>start with</option>
+            <option>end with</option>
+            <option>contain</option>
+        </select> <input type="text" id="tin"> of length <input type="text" id="len" placeholder="any">
+        <button id="try" onclick="tryl()">Try</button>
         <br>
-        <div id="startres">
-        </div>
-        <hr>
-        Words that end with:
-        <input type="text" id="end">
-        of length <input type="text" id="endlen" placeholder="any">
-        <button id="endbutton" onclick="calc('end')">Try</button>
-        <br>
-        <div id="endres">
-        </div>
-        <hr>
-        Words that contain:
-        <input type="text" id="contain">
-        of length <input type="text" id="containlen" placeholder="any">
-        <button id="containbutton" onclick="calc('contain')">Try</button>
-        <br>
-        <div id="containres">
+        <div id="res">
         </div>
         <hr>
     </body>
