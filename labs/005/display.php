@@ -18,6 +18,7 @@
             while($row = $results->fetchArray()) {
                 echo("Username: <span class='username'>".$row['username']."</span><br>");
                 echo("Email: <span class='email'>".$row['email']."</span><br>");
+                echo("City: <span class='city'>".$row['city']."</span><br>");
                 echo("State: <span class='state'>".$row['state']."</span><br>");
                 echo("ZIP Code: <span class='zip'>".$row['zip']."</span><br>");
                 echo("Comments: <span class='comments'>".$row['comments']."</span><hr>");
