@@ -1,0 +1,22 @@
+id,username,state,zip,email,date,comments,city
+1,jhoughton,VA,22101,2017jhoughto@tjhsst.edu,20161404,"A comment",
+2,jhoughton2,NULL,NULL,NULL,,NULL,
+3,james,NULL,NULL,NULL,,"Some comment",
+4,james,NULL,NULL,NULL,,"Some comment",
+5,james,,,,,"Some comment",McLean
+6,2017jhoughto,VA,22101,jameshoughton3@gmail.com,,"A comment",McLean
+7,james,VA,22101,wasd@wasd.com,,"A COMMENT :D",McLean
+8,jameswashere,,22101,jameshoughton3@gmail.com,,LLLLLLL,
+9,asdjkasd,,,,,,
+10,james,,,,,,
+11,james,VA,22101,jameswashere@gmail.com,,,McLean
+12,duherro,VA,22101,jameswashere@gmail.com,,,McLean
+13,james,,,,,,
+14,james,VA,22101,jamessemailaddress@gmail.com,,LLLLLLLLLLWLWLWLWWWLWLLL,McLean
+15,a,,,,,,
+16,asd,,,,,,
+17,asd,,,,,,
+18,asd,,,,,,
+19,asd,,,,,,
+20,a,,,,,,
+21,a,,,,,,

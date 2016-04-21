@@ -65,6 +65,7 @@
                 $regex.="(?=".str_repeat("\w*".$let,$num).")";
             }
             $regex.="\w{".strlen($l).",}";
+			echo($regex);
             find($regex,$len,$l);
             break;
     }

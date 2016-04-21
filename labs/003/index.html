@@ -72,6 +72,32 @@
 				}
 				$("form").submit(function(event){
 					$.cookie('username', $("input#username").val());
+					event.preventDefault();
+					var $form = $(this),
+						username_val = $form.find("input[name='username']").val(),
+						zip_val = $form.find("input[name='zip']").val(),
+						email_val = $form.find("input[name='email']").val(),
+						city_val = $form.find("input[name='city']").val(),
+						state_val = $form.find("input[name='state']").val(),
+						comments_val = $form.find("textarea[name='comments']").val(),
+						date_val = $form.find("input[name='date']").val(),
+						url = $form.attr("action");
+					var posting = $.post( url, {
+						username: username_val,
+						zip: zip_val,
+						state: state_val,
+						city: city_val,
+						email: email_val,
+						date: date_val,
+						comments: comments_val
+					});
+					posting.done(function(){
+						$("#code").css({color:'green'}).html("Thanks for submitting!");
+						$("#redir").css({display:"block"});
+						$("#submit").attr({disabled:true});
+					}).fail(function(){
+						$("#code").css({color:'red'}).html("Bad request.");
+					});
 				});
 				$("input#username").focus();
 			});
@@ -85,6 +111,12 @@
 			}
 			#appd > * {
 				color:rgba(0,0,0,.70);
+			}
+			a.redir, a.redir:active, a.redir:link, a.redir:visited {
+				color: #3333BB;
+			}
+			a.redir:hover {
+				color: blue;
 			}
 			.bottomright {
 				opacity:.5;
@@ -243,9 +275,11 @@
 						<br>
 					</div>
 					<br>
-					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="submit">
 						Submit
-					</button>
+					</button><br>
+					<p id="code" style="margin-top:10px;margin-bottom:0">&nbsp;</p>
+					<p id="redir" style="display:none">View other responses <a href="../005/display.php" class="redir">here</a>.</p>
 				</form>
 			</div>
 			<div class="mdl-cell mdl-cell--2-col"></div>
