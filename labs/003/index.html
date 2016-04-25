@@ -91,12 +91,14 @@
 						date: date_val,
 						comments: comments_val
 					});
-					posting.done(function(){
+					posting.done(function(res){
 						$("#code").css({color:'green'}).html("Thanks for submitting!");
 						$("#redir").css({display:"block"});
 						$("#submit").attr({disabled:true});
-					}).fail(function(){
-						$("#code").css({color:'red'}).html("Bad request.");
+					}).fail(function(res){
+						$("#code").css({color:'red'}).html(
+							$(res['responseText']).filter('status')
+						);
 					});
 				});
 				$("input#username").focus();

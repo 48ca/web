@@ -21,11 +21,11 @@
 	$results = $db->query($query);
 	if($results) {
 		header("Location: display.php");
-		echo("0");
+		echo("<status>Success</status>");
 		http_response_code(200);
 		die();
 	} else {
-		echo("1");
+		echo("<status>".$db->lastErrorMsg()."</status>");
 		http_response_code(400);
 		die();
 	}
