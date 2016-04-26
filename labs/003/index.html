@@ -18,6 +18,10 @@
 				var keys = Object.keys(options);
 				var klen = keys.length;
 				var ids = [];
+				var use_ajax = true;
+				$("#ajaxcheckbox").click(function() {
+					use_ajax = !use_ajax;
+				}).prop({'checked':true}).click();
 				for(var i=0; i<klen; i++) {
 					ids[i] = keys[i].replace(" ","");
 				}
@@ -50,17 +54,19 @@
 				$("#zipfield").focusout(function() {
 					var zip = $("#zip").val();
 					if(zip.match(/[0-9]{5}/g)) {
-						var ajaxstring = "https://maps.googleapis.com/maps/api/geocode/json?address="+zip;
+						// var ajaxstring = "https://maps.googleapis.com/maps/api/geocode/json?address="+zip;
+						var ajaxstring = "https://api.zippopotam.us/us/"+zip;
+						console.log(ajaxstring);
 						$.getJSON(ajaxstring,{},function(data) {
-							var res = data["results"][0]["address_components"];
-							var state = res[2]["short_name"];
+							var city = data['places'][0]['place name'];
+							var state = data['places'][0]['state abbreviation'];
 							if(state.match(/[A-Z]{2}/)) {
 								if($("#state").val() == "") {
 									$("#state").val(state);
 									$("#statefield").addClass("is-dirty");
 								}
 								if($("#city").val() == "") {
-									$("#city").val(res[1]["long_name"]);
+									$("#city").val(city);
 									$("#cityfield").addClass("is-dirty");
 								}
 							} 
@@ -72,6 +78,7 @@
 				}
 				$("form").submit(function(event){
 					$.cookie('username', $("input#username").val());
+					if(!use_ajax) return;
 					event.preventDefault();
 					var $form = $(this),
 						username_val = $form.find("input[name='username']").val(),
@@ -277,9 +284,15 @@
 						<br>
 					</div>
 					<br>
+					<label style="width:inherit;margin-bottom:10px;" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ajaxcheckbox">
+						<input type="checkbox" id="ajaxcheckbox" class="mdl-checkbox__input" checked>
+					    <span class="mdl-checkbox__label">Use AJAX</span>
+					</label>
+					<br>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="submit">
 						Submit
-					</button><br>
+					</button>
+					<br>
 					<p id="code" style="margin-top:10px;margin-bottom:0">&nbsp;</p>
 					<p id="redir" style="display:none">View other responses <a href="../005/display.php" class="redir">here</a>.</p>
 				</form>

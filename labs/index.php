@@ -51,7 +51,7 @@
 	</head>
 	<body>
 		<p>
-			The Lab Index
+			Labs
 		</p>
 		<div class="list">
 		<?php

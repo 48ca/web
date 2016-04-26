@@ -22,7 +22,7 @@
 	if($results) {
 		header("Location: display.php");
 		echo("<status>Success</status>");
-		http_response_code(200);
+		http_response_code(302);
 		die();
 	} else {
 		echo("<status>".$db->lastErrorMsg()."</status>");
