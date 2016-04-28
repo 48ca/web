@@ -8,7 +8,7 @@
 	if(!$db) { echo("Failed to open DB"); return; }
 	function gvar($ar) {
 		if (isset($_POST[$ar]) && $_POST[$ar] !== '') 
-			return "'".$_POST[$ar]."'";
+			return "'".SQLite3::escapeString($_POST[$ar])."'";
 		else return 'NULL';
 	}
 	$uname = gvar('username');
@@ -17,7 +17,8 @@
 	$cty = gvar('city');
 	$zp = gvar('zip');
 	$comment = gvar('comments');
-	$query = "INSERT INTO apps (username,email,city,state,zip,comments) VALUES (".$uname.",".$mail.",".$cty.",".$st.",".$zp.",".$comment.");";
+	$dt = gvar('date');
+	$query = "INSERT INTO apps (username,email,city,state,zip,comments,date) VALUES (".$uname.",".$mail.",".$cty.",".$st.",".$zp.",".$comment.",".$dt.");";
 	$results = $db->query($query);
 	if($results) {
 		header("Location: display.php");
