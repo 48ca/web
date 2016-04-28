@@ -16,11 +16,17 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<style>
-			span.date {
+			p {
+				margin: 0;
+			}
+			p.date {
 				white-space: nowrap;
 			}
-			span.comments {
-				white-space: normal;
+			p.comments {
+				max-width:500px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
 			}
 		</style>
     </head>
@@ -40,7 +46,7 @@
 				</tr>
 			<?php
 				function nl( $s,$r ) {
-					echo("<td><span class=".$s.">".htmlspecialchars($r[$s])."</span></td>");
+					echo("<td class=".$s."><p class=".$s.">".htmlspecialchars($r[$s])."</p></td>");
 				}
 				$query = "SELECT * FROM apps";
 				$results = $db->query($query);
@@ -59,7 +65,7 @@
 			?>
 			</table>
 		</div>
-		<div class="col-md-4 text-center" style="margin-top:40px">
+		<div class="col-md-12 text-center" style="margin-top:40px">
 			<a class="btn btn-primary" href="dbdump.php">Export as CSV</a>
 		</div>
     </body>

@@ -1,4 +1,6 @@
 <?php
+	header('Content-disposition: attachment; filename=dump.txt');
+	header('Context-type: text/csv');
 	class AppDB extends SQLite3 {
 		function __construct() {
 			$this->open('005.db');
@@ -11,6 +13,6 @@
 	$output = fopen('php://output','w');
 	while($row = $results->fetchArray(SQLITE3_ASSOC)) {
 		fputcsv($output, $row);
-		// echo("<br>");
+		echo("\n");
 	}
 ?>
