@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script>
+		$(document).ready(function() {
+			$("#b").click(function() {
+				var name = $(numdays).val()
+
+				function get8th() {
+					$.ajax({
+						url: "https://ion.tjhsst.edu/api/signups/user/32267",
+						data: {
+							page_size: n
+						},
+						dataType: "json",
+						success:
+						function(data) {
+							console.log(data);
+							$("#result").html((
+								function() {
+									var str = "";
+									for(var i=0;i<n;i++) {
+										str += data['results'][i]['date'] + ": ";
+										str += data['results'][i]['day_type']['name'];
+										str += "<br>";
+									}
+									return str;
+								})()
+							);
+						}
+					});
+				}
+				var searchapi = "https://ion.tjhsst.edu/api/search/" + name;
+				$.ajax({
+					url: searchapi,
+					success: function(data) {
+						console.log(data);
+					}
+				});
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<input id="numdays">
+		<button id="b">dddd</button>
+		<div id="result"></div>
+	</body>
+</html>

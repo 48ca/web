@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<title>Get The Weather</title>
+		 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		 <script type="text/javascript">
+		 	$(document).ready(function(){
+				var apistring = "http://api.openweathermap.org/data/2.5/weather";
+				var apikey = "00eaae2b784c14005954ce5b71d345b0";
+				$("#clock").click(function() {
+					var lat = $("#lat").val();
+					var lon = $("#lon").val();
+					$.ajax({
+						url: apistring,
+						data: {
+							appid: apikey,
+							lat: lat,
+							lon: lon
+						},
+						success: function(data) {
+							console.log(data);
+							// $("#output").html(data)
+						}
+					});
+				});
+			});
+		 </script>
+	</head>
+	<body>
+		<input id="lon">
+		<input id="lat">
+		<div id="output"></div>
+		<button id="clock">Clack</button>
+	</body>
+</html>
