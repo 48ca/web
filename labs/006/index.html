@@ -1,0 +1,147 @@
+<html>
+	<head>
+		<title>Integral calculator</title>
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var apistring = "wa.php"; // "https://api.wolframalpha.com/v2/query";
+				$("#submit").click(function(){
+					var du = $("#du").val();
+					$(this).html("Working...");
+					$.ajax({
+						url: apistring,
+						data: {
+							q: "integrate " + du
+						},
+						success: function(data) {
+							var res = $.parseJSON(data);
+							var pods = res['pod'];
+							var pd = $("#result");
+							$("#submit").html("Integrate");
+							pd.empty();
+							function a(p){ return p["@attributes"]; }
+							function s(p){ return p["subpod"]; }
+							function img(p){
+								try {
+									return "<img src="+a(s(p)['img'])['src']+"></img>";
+								} catch(e) {
+									return "";
+								}
+							}
+							console.log(res);
+							if(pods == undefined) {
+								pd.append("<p class='error'>No results</p>");
+								setInterval(function() {
+									$("p.error").fadeOut(1000);
+								}, 3000);
+								return;
+							}
+							$(pods).each(function(pn){
+								var cdiv = $("<div class='pod'></div>");
+								var pod = pods[pn];
+								console.log(pod);
+								cdiv.append("<h2>"+a(pod)['title']+"</h2>");
+								cdiv.append(img(pod));
+								if(pod['subpod'] instanceof Array) {
+									$(pod['subpod']).each(function(spn){
+										console.log(spn);
+										var spod = pod['subpod'][spn];
+										cdiv.append("<img src='"+a(spod['img'])['src']+"'></img><br>");
+									});
+								}
+								console.log(cdiv);
+								console.log(pd);
+								pd.append("<hr>").append(cdiv).fadeIn(200);
+							});
+						}
+					});
+				});
+			});
+		</script>
+		<style type="text/css">
+			button.btn-submit,
+			button.btn-submit:visited,
+			button.btn-submit:active
+			{
+				background-color: #7766BB;
+				color: white;
+				transition: all 200ms;
+			}
+			button.btn-submit:hover,
+			button.btn-submit:focus
+			{
+				background-color: #DDDDDD;
+				color: black;
+			}
+			.jumbotron {
+				border: 0;
+				border-bottom: 2px solid #7766BB;
+			}
+			.jumbotron h1 {
+				text-align: center;
+				width: 100%;
+				color: black;
+			}
+			.main {
+				display: block;
+			}
+			.main input {
+				text-align: center;
+				width:60%;
+				margin: 0 auto;
+				display: inherit;
+			}
+			.main button {
+				text-align: center;
+				display: inherit;
+				margin: 0 auto;
+				margin-top: 20px;
+			}
+			#result {
+				text-align: center;
+				margin-bottom: 20px;
+			}
+			hr {
+				display: block;
+				height: 1px;
+				/*
+				border: 0;
+				border-top: 2px solid #7766BB;
+				*/
+				margin: 1em 0;
+				margin-bottom: 20px;
+				margin-top: 20px;
+				padding: 0; 
+			}
+			p.error {
+				color: EE3333;
+				font-size: 18px;
+				margin-top: 20px;
+			}
+			p.wolf {
+				font-size: 9px;
+				position: absolute;
+				top: 180px;
+				right: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="jumbotron">
+			<h1>Integral Calculator</h1>
+			<p class="wolf">Using the <a href="//www.wolframalpha.com" target="_blank">Wolfram|Alpha</a> free API</p>
+		</div>
+		<div class="container">
+			<div class="col-md-3"></div>
+			<div class="col-md-6 main">
+				<input type="text" id="du" placeholder="x^2 dx">
+				<button id="submit" class="btn btn-submit">Integrate</button>
+			</div>
+			<div class="col-md-3"></div>
+			<div id="result"></div>
+		</div>
+	</body>
+</html>

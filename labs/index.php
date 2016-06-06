@@ -54,14 +54,19 @@
 			Labs
 		</p>
 		<div class="list">
-		<?php
-			$dir = scandir('.');
-			foreach($dir as $w) {
-				if($w[0] != '0') continue;
-				echo '<div class="wrap"><a href="'.$w.'">Lab '.$w.'</a>';
-				echo '<iframe src="'.$w.'"></iframe></div>';
-			}
-		?>
+			<?php
+				$dir = scandir('.');
+				foreach($dir as $w) {
+					if($w[0] != '0') continue;
+					echo '<div class="wrap"><a href="'.$w.'">Lab '.$w.'</a>';
+					// echo '<iframe src="'.$w.'"></iframe>';
+					echo '</div>';
+				}
+			?>
+			<div class="wrap">
+				<a href="https://docs.google.com/document/d/1_7cEBmi9WRyZHktBIEdB_Sn-XJandEUqpHfMDCOyzG0/edit?usp=sharing">Final Project Log</a>
+				<iframe src="https://docs.google.com/document/d/1_7cEBmi9WRyZHktBIEdB_Sn-XJandEUqpHfMDCOyzG0/edit?usp=sharing"></iframe>
+			</div>
 		</div>
 	</body>
 </html>
