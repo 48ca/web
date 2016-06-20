@@ -1,38 +1,131 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sudoku Solver</title>
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="form.css">
+         
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.amber-blue.min.css">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-red.min.css">
         <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="sudoku.js"></script>
         <style>
-            input.grid {
-                text-align:center;
+            input[type="text"] {
+                width: 100%;
+                height: auto;
+                box-sizing: border-box;
+                -webkit-box-sizing:border-box;
+                -moz-box-sizing: border-box;
             }
+            body {
+                text-align: center;
+                background-color: #EEE;
+            }
+            table { border-collapse: collapse; font-family: Calibri, sans-serif; background-color: white; }
+            colgroup, tbody { border: solid medium; }
+            td { border: solid thin; height: 3em; width: 3em; text-align: center; padding: 0; }
+            input.numberInput {
+                font-size:18pt;
+                height:46px;
+                text-align:center;
+                opacity: 1;
+                transition: opacity 300ms;
+            }
+            .solve {
+                width: 100%;
+                text-align: center;
+            }
+            #loading, #loadingocr {
+                z-index: -100;
+                opacity: 0;
+                transition: opacity 300ms;
+                margin-left: auto;
+                margin-right: auto;
+                width: 200px;
+            }
+            #loading {
+                top: -20px;
+            }
+            #loadingocr {
+                top: 20px;
+            }
+            #submit, #clear {
+                opacity: 1;
+                transition: opacity 300ms;
+            }
+
+            .file_input_div {
+                margin: auto;
+                width: 250px;
+                height: 40px;
+            }
+            .file_input {
+                float: left;
+            }
+            #file_input_text_div {
+                width: 200px;
+                margin-top: -8px;
+                margin-left: 5px;
+            }
+            .none {
+                display: none;
+            }
+
         </style>
+        <meta charset="utf-8">
+        <title>Sudoku Solver</title>
     </head>
     <body>
-        <table class="board">
-            <?php
-                for($i=0;$i<9;$i++) {
-                    $str = "<tr class='r$i'>";
-                    for($j=0;$j<9;$j++) {
-                            $str .= "
-                                <td>
-                                    <input type='text' class='grid c$j mdl-textfield__input' maxlength='1' size='4'>
-                                </td>
-                            ";
-                    }
-                    $str .= "</tr>";
-                    echo $str;
+        <h1>Sudoku Solver</h1>
+        <h4>Enter numbers below or upload a picture of your sudoku puzzle.</h4>
+        <br>
+        <table align="center">
+        <colgroup><col><col><col>
+        <colgroup><col><col><col>
+        <colgroup><col><col><col>
+        <tbody>
+        <?php
+            for($i = 0;$i<9;$i+=1) {
+                echo("<tr class='r$i'>");
+                for($j = 0;$j<9;$j+=1) {
+                    echo("<td><input type='text' maxlength='1' class='numberInput c$j'></td>");
                 }
-            ?>
+                echo("</td>");
+            }
+        ?>
+        </tbody>
         </table>
-        <button type="submit" id="submit">Submit</button>
-        <form>
-             <input type="file" accept="image/*" capture="camera">
-        </form>
+        <br>
+
+        <div class="solve">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="font-weight:bold" id="clear">
+                Clear
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="font-weight:bold" id="submit">
+                Solve
+            </button>
+            <!-- MDL Progress Bar with Indeterminate Progress -->
+            <div id="loading" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        </div>
+        <div class="upload" style="margin-top:50px;">
+            <form action="image.php" enctype="multipart/form-data" method="post">
+                <div class="file_input_div">
+                    <div class="file_input">
+                        <label class="image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
+                            <i class="material-icons" style="text-align:center">file_upload</i>
+                            <input type="file" accept="image/*" capture="camera" name="sudoku" size="25" id="image" class="none">
+                        </label>
+                    </div>
+                    <div id="file_input_text_div" class="mdl-textfield mdl-js-textfield textfield-demo">
+                        <input class="file_input_text mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
+                        <label class="mdl-textfield__label" for="file_input_text">Upload a sudoku</label>
+                    </div>
+                </div>
+                <br>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="font-weight:bold" id="submitimage">
+                    Submit
+                </button>
+                <div id="loadingocr" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            </form>
+        </div>
     </body>
 </html>
