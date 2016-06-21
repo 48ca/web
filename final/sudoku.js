@@ -138,7 +138,7 @@ $(document).ready(function(){
     }
     $("#share").click(function() {
         $("#slink").val(getSharable()).addClass("is-dirty");
-        $("#sharable_link").addClass("is-dirty");
+        $("#shareable_link").addClass("is-dirty");
     });
 
     $.urlParam = function(name){
