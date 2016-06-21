@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="form.css">
-         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-red.min.css">
         <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="sudoku.js"></script>
         <style>
             input[type="text"] {
@@ -20,7 +20,13 @@
                 text-align: center;
                 background-color: #EEE;
             }
-            table { border-collapse: collapse; font-family: Calibri, sans-serif; background-color: white; }
+            table {
+                border-collapse: collapse;
+                font-family: Calibri, sans-serif;
+                background-color: white;
+                margin: 0 auto;
+                padding: 5px;
+            }
             colgroup, tbody { border: solid medium; }
             td { border: solid thin; height: 3em; width: 3em; text-align: center; padding: 0; }
             input.numberInput {
@@ -41,16 +47,14 @@
                 margin-left: auto;
                 margin-right: auto;
                 width: 200px;
-            }
-            #loading {
-                top: -20px;
-            }
-            #loadingocr {
                 top: 20px;
             }
-            #submit, #clear {
+            #submit, #clear, #submitimage {
                 opacity: 1;
-                transition: opacity 300ms;
+                transition: color 100ms;
+            }
+            tr.r2, tr.r5 {
+                border-bottom: solid medium;
             }
 
             .file_input_div {
@@ -69,16 +73,33 @@
             .none {
                 display: none;
             }
+            .upload {
+                margin-top: 30px;
+            }
+            @media screen and (min-width: 1200px) {
+                .shareable {
+                    float:right;
+                    width:200px;
+                    margin-top: 20px;
+                }
+            }
+            @media screen and (min-width: 1200px) {
+                .upload {
+                    float:left;
+                    width:200px;
+                    margin-top: 8px;
+                    margin-left:27%;
+                }
+            }
 
         </style>
-        <meta charset="utf-8">
         <title>Sudoku Solver</title>
     </head>
     <body>
         <h1>Sudoku Solver</h1>
         <h4>Enter numbers below or upload a picture of your sudoku puzzle.</h4>
         <br>
-        <table align="center">
+        <table>
         <colgroup><col><col><col>
         <colgroup><col><col><col>
         <colgroup><col><col><col>
@@ -89,7 +110,7 @@
                 for($j = 0;$j<9;$j+=1) {
                     echo("<td><input type='text' maxlength='1' class='numberInput c$j'></td>");
                 }
-                echo("</td>");
+                echo("</tr>");
             }
         ?>
         </tbody>
@@ -106,26 +127,38 @@
             <!-- MDL Progress Bar with Indeterminate Progress -->
             <div id="loading" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
         </div>
-        <div class="upload" style="margin-top:50px;">
-            <form action="image.php" enctype="multipart/form-data" method="post">
-                <div class="file_input_div">
-                    <div class="file_input">
-                        <label class="image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
-                            <i class="material-icons" style="text-align:center">file_upload</i>
-                            <input type="file" accept="image/*" capture="camera" name="sudoku" size="25" id="image" class="none">
-                        </label>
+        <div class="extra" style="margin-bottom:40px;">
+            <div class="upload">
+                <form action="image.php" enctype="multipart/form-data" method="post">
+                    <div class="file_input_div">
+                        <div class="file_input">
+                            <label class="image_input_button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
+                                <i class="material-icons" style="text-align:center">file_upload</i>
+                                <input type="file" accept="image/*" name="sudoku" size="25" id="image" class="none">
+                            </label>
+                        </div>
+                        <div id="file_input_text_div" class="mdl-textfield mdl-js-textfield textfield-demo">
+                            <input class="file_input_text mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
+                            <label class="mdl-textfield__label" for="file_input_text">Upload a sudoku</label>
+                        </div>
                     </div>
-                    <div id="file_input_text_div" class="mdl-textfield mdl-js-textfield textfield-demo">
-                        <input class="file_input_text mdl-textfield__input" type="text" disabled readonly id="file_input_text" />
-                        <label class="mdl-textfield__label" for="file_input_text">Upload a sudoku</label>
-                    </div>
+                    <br>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="font-weight:bold" id="submitimage">
+                        Submit
+                    </button>
+                    <div id="loadingocr" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                </form>
+            </div>
+            <div class="sharable" style="margin-top: 42px;">
+                <div id="sharable_link" class="mdl-textfield mdl-js-textfield">
+                    <input class="file_input_text mdl-textfield__input" type="text" id="slink" />
+                    <label class="mdl-textfield__label" for="slink">Shareable link</label>
                 </div>
                 <br>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="font-weight:bold" id="submitimage">
-                    Submit
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="font-weight:bold" id="share">
+                    Get link
                 </button>
-                <div id="loadingocr" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-            </form>
+            </div>
         </div>
     </body>
 </html>

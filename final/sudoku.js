@@ -29,30 +29,28 @@ $(document).ready(function(){
         }
         return str;
     }
-    populate(".8..4....3......1........2...5...4.69..1..8..2...........3.9....6....5.....2.....");
     $("#clear").click(function() {
         populate("         ".replace(/ /g,'         '));
     });
     $("#submit").click(function(){
+        $(this).css({color:'black'})
         str = getstr();
-        if(str.replace(/\./g,'') == "") return;
-        $(this).css({opacity:0});
-        $("#clear").css({opacity:0});
+        // if(str.replace(/\./g,'') == "") return;
         $("#loading").css({opacity:1});
         $.ajax({
             type: "POST",
             url: "solve.php",
             data: { b:str },
             success: function(d) {
-                $("#submit").css({opacity:1});
-                $("#clear").css({opacity:1});
                 $("#loading").css({opacity:0});
-                if(d.startsWith("500")) alert(d);
-                if(d.startsWith("400")) alert(d);
+                if(d.startsWith("500") || d.startsWith("400") || d.length != 81) {
+                    $("#submit").css({color: 'red'});
+                    setTimeout(function() {
+                        $("#submit").css({color: 'black'});
+                    }, 300);
+                }
                 else {
-                    if(d.length == 81)
-                        populate(d);
-                    else alert(d + " is not long enough");
+                    populate(d);
                 }
             }
         });
@@ -68,8 +66,8 @@ $(document).ready(function(){
                     key >= 49 && key <= 57 ||
                 // Numeric keypad
                     key >= 96 && key <= 105 ||
-                // Backspace and Tab and Enter
-                    key == 8 || key == 9 || key == 13)
+                // Backspace and Tab and Enter and Delete
+                    key == 8 || key == 9 || key == 13 || key == 46)
                         return true;
                 return false;
             });
@@ -94,7 +92,14 @@ $(document).ready(function(){
                 $("#loadingocr").css({opacity:0});
                 console.log("Repopulating...");
                 var clean = data.replace(/([ ]|\n)/g,'').replace(/0/g,' ');
-                populate(clean);
+                if(clean.length == 81) {
+                    populate(clean);
+                } else {
+                    $("#submitimage").css({color:'red'});  
+                    setTimeout(function() {
+                        $("#submitimage").css({color: 'black'});
+                    }, 300);
+                }
             }
         });
     });
@@ -127,5 +132,27 @@ $(document).ready(function(){
                 fileInputTextDiv.classList.remove('is-focused');
             }
         }
+    }
+    function getSharable() {
+        return (""+document.location).split("?")[0] + "?b=" + getstr();
+    }
+    $("#share").click(function() {
+        $("#slink").val(getSharable()).addClass("is-dirty");
+        $("#sharable_link").addClass("is-dirty");
+    });
+
+    $.urlParam = function(name){
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results==null) {
+           return null;
+        }
+        else {
+           return results[1] || 0;
+        }
+    }
+    if($.urlParam("b")) {
+        populate($.urlParam("b"));
+    } else {
+        populate(".8..4....3......1........2...5...4.69..1..8..2...........3.9....6....5.....2.....");
     }
 });
