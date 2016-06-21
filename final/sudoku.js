@@ -100,6 +100,12 @@ $(document).ready(function(){
                         $("#submitimage").css({color: 'black'});
                     }, 300);
                 }
+            },
+            error: function(data) {
+                $("#submitimage").css({color:'red'});  
+                setTimeout(function() {
+                    $("#submitimage").css({color: 'black'});
+                }, 300);
             }
         });
     });
