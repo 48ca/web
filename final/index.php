@@ -82,15 +82,15 @@
             #shareable_link {
                 width: 246px;
             }
-            @media screen and (min-width: 1200px) {
+            @media screen and (min-width: 1000px) {
                 .shareable {
-                    margin-right: 200px;
+                    margin-right: 20%;
                     float:right;
                 }
             }
-            @media screen and (min-width: 1200px) {
+            @media screen and (min-width: 1000px) {
                 .upload {
-                    margin-left: 200px;
+                    margin-left: 20%;
                     float:left;
                 }
             }
