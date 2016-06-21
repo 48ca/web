@@ -76,19 +76,22 @@
             .upload {
                 margin-top: 30px;
             }
+            .shareable {
+                margin-top: 20px;
+            }
+            #shareable_link {
+                width: 246px;
+            }
             @media screen and (min-width: 1200px) {
                 .shareable {
+                    margin-right: 200px;
                     float:right;
-                    width:200px;
-                    margin-top: 20px;
                 }
             }
             @media screen and (min-width: 1200px) {
                 .upload {
+                    margin-left: 200px;
                     float:left;
-                    width:200px;
-                    margin-top: 8px;
-                    margin-left:27%;
                 }
             }
 
@@ -149,8 +152,8 @@
                     <div id="loadingocr" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
                 </form>
             </div>
-            <div class="sharable" style="margin-top: 42px;">
-                <div id="sharable_link" class="mdl-textfield mdl-js-textfield">
+            <div class="shareable">
+                <div id="shareable_link" class="mdl-textfield mdl-js-textfield">
                     <input class="file_input_text mdl-textfield__input" type="text" id="slink" />
                     <label class="mdl-textfield__label" for="slink">Shareable link</label>
                 </div>
